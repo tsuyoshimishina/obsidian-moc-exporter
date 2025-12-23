@@ -1,0 +1,8 @@
+# Example configuration file for obsidian-moc-exporter
+# Copy this file to config.yaml and customize as needed
+
+# Default vault path (optional - can be overridden by --vault argument)
+# vault_path: "C:/Users/username/ObsidianVault"
+
+# Default maximum link traversal depth
+# depth: 2
