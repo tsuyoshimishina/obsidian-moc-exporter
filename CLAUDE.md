@@ -8,7 +8,8 @@ obsidian-moc-exporter は、指定した Obsidian MOC（Map of Content）ノー�
 
 - Python 3.11
 - Conda 環境名: `obsidian-moc-exporter`
-- 外部依存なし（標準ライブラリのみ）
+- 実行時依存: なし（標準ライブラリのみ）
+- 開発時依存: pytest>=7.0
 
 ## プロジェクト構成
 
@@ -21,10 +22,13 @@ obsidian-moc-exporter/
 ├── main.py                   # CLI エントリーポイント、引数パース
 ├── config/
 │   └── config.example.yaml   # 設定例
-└── src/
-    └── moc_exporter/
-        ├── __init__.py
-        └── exporter.py       # メインロジック（ObsidianMOCExporter クラス）
+├── src/
+│   └── moc_exporter/
+│       ├── __init__.py
+│       └── exporter.py       # メインロジック（ObsidianMOCExporter クラス）
+└── tests/
+    ├── __init__.py
+    └── test_exporter.py      # ユニットテスト
 ```
 
 ## コマンド
@@ -50,7 +54,10 @@ python main.py --vault "path/to/vault" --moc "MOC.md" --output "path/to/output" 
 | `[[Page]]` | `[Page](Page.md)` |
 | `[[Page\|Alias]]` | `[Alias](Page.md)` |
 | `![[Note]]`（埋め込み） | `[Note](Note.md)` |
-| `![[image.png]]` | `![image.png](image.png)` |
+| `![[image.png]]` | `![image](image.png)` |
+| `![[image.png\|alt]]` | `![alt](image.png)` |
+| `![[image.png\|alt\|300]]` | `![alt](image.png)` |
+| `![[image.png\|300]]` | `![image](image.png)` |
 | `%%comment%%` | （削除） |
 | `#tag` | （保持） |
 | Frontmatter | （保持） |

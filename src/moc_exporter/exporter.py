@@ -174,6 +174,17 @@ class ObsidianMOCExporter:
             # Remove heading/block references for filename
             filename = target.split('#')[0]
 
+            # Parse alias to extract alt text (exclude width specifications like "300" or "300x200")
+            parsed_alt = None
+            if alias:
+                parts = alias.split('|')
+                for part in parts:
+                    part = part.strip()
+                    # Skip if it's a width specification (e.g., "300", "300x200")
+                    if not re.match(r'^\d+(x\d+)?$', part):
+                        parsed_alt = part
+                        break
+
             if self.is_attachment(filename):
                 # Find and collect the attachment
                 attachment_path = self.find_attachment_file(filename)
@@ -185,15 +196,15 @@ class ObsidianMOCExporter:
 
                 if self.is_image(filename):
                     # Image: ![alt](image.png)
-                    alt_text = alias if alias else Path(filename).stem
+                    alt_text = parsed_alt if parsed_alt else Path(filename).stem
                     return f'![{alt_text}]({output_filename})'
                 else:
                     # Other attachment: [name](file.pdf)
-                    link_text = alias if alias else Path(filename).name
+                    link_text = parsed_alt if parsed_alt else Path(filename).name
                     return f'[{link_text}]({output_filename})'
             else:
                 # Note embed -> regular link
-                link_text = alias if alias else target
+                link_text = parsed_alt if parsed_alt else target
                 note_filename = Path(filename).stem + '.md'
                 return f'[{link_text}]({note_filename})'
 

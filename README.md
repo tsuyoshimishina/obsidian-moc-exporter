@@ -56,7 +56,10 @@ python main.py --vault "C:/Users/username/ObsidianVault" --moc "Projects/MOC-Pro
 | `[[Page]]` | `[Page](Page.md)` |
 | `[[Page\|Alias]]` | `[Alias](Page.md)` |
 | `![[Note]]` (embed) | `[Note](Note.md)` |
-| `![[image.png]]` | `![image.png](image.png)` |
+| `![[image.png]]` | `![image](image.png)` |
+| `![[image.png\|alt]]` | `![alt](image.png)` |
+| `![[image.png\|alt\|300]]` | `![alt](image.png)` |
+| `![[image.png\|300]]` | `![image](image.png)` |
 | `%%comment%%` | (removed) |
 | `#tag` | (preserved) |
 | Frontmatter | (preserved) |
